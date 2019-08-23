@@ -29,3 +29,4 @@
 # Ignore folder by text editor or ide
 .vscode
 .idea
+coverage/*

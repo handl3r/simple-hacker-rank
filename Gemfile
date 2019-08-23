@@ -42,10 +42,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'pry-rails', :group => :development
 # Add gem rubocop for convention coding
 gem 'rubocop', '~> 0.74.0', require: false
+# Add gem simplecov to check testing
+gem 'simplecov', require: false, group: :test
 
 # --------------------------- END -----------------------------
 
 group :development, :test do
+  # Use gem rspec to test for Project
+  gem 'rspec-rails', '~> 3.8'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
