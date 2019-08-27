@@ -5,6 +5,7 @@ class Challenge < ApplicationRecord
   validates :question, presence: true
   # Associations =======================
   belongs_to :groupchallenge
-  has_many :users, through: :passlevel
-  has_one :testcase
+  has_many :passlevels
+  has_many :users, :through => :passlevels
+  has_many :testcase
 end

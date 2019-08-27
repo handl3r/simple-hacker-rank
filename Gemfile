@@ -44,6 +44,8 @@ gem 'pry-rails', :group => :development
 gem 'rubocop', '~> 0.74.0', require: false
 # Add gem simplecov to check testing
 gem 'simplecov', require: false, group: :test
+# Add gem faker for seed data
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 
 # --------------------------- END -----------------------------
 

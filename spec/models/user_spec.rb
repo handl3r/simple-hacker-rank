@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -37,6 +39,10 @@ RSpec.describe User, type: :model do
     it 'should ensure password_digest has minimum length is 6 character' do
       user = User.new(common_data.merge(password_digest: '111')).save
       expect(user).to eq(false)
+    end
+    it 'should ensure success of creating' do
+      user = User.new(common_data).save
+      expect(user).to eq(true)
     end
   end
 end

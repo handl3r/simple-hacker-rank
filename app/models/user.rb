@@ -7,8 +7,9 @@ class User < ApplicationRecord
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: true }
   validates :name, uniqueness: true, presence: true
-  validates :admin, presence: true
+  validates :admin, inclusion: { in: [true, false] }
   validates :password_digest, presence: true, length: { minimum: 6 }
   # Associations ==============================
-  has_many :challenges, through: :passlevel
+  has_many :passlevels
+  has_many :challenges, :through => :passlevels
 end
