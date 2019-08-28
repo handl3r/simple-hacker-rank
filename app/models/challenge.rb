@@ -7,5 +7,5 @@ class Challenge < ApplicationRecord
   belongs_to :groupchallenge
   has_many :passlevels
   has_many :users, :through => :passlevels
-  has_many :testcase
+  has_many :testcases
 end
