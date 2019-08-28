@@ -6,6 +6,7 @@
 class RunContainer
   SOURCE = 'run_file.rb'
   DES = 'result.rb'
+  # This constant must be redefine onserver
   SUBMIT_CODE_RESULT_FOLDER = '/home/thai/www/RailsPR/Project2/submit_code_result'
   TEMP_CONTAINER_FOLDER = '/app'
 
