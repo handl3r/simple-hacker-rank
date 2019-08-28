@@ -10,35 +10,23 @@ class RunContainer
     @source = source
     @result = result
     @language = language
-    @name_image = "image_#{language}"
-    @name_container = "#{language}_container_#{id}"
+    @name_image = "project2_#{language}_image"
+    @name_container = "project2_#{language}_container" # add _#{id} in the end when dont test
   end
 
   # method to copy file keep source submit to container and run
   def run
-    run_file_server = "dockerStorage/#{@language}/#{@source}"
-    puts run_file_server
-    result_file_server = "dockerStorage/#{@language}/result.txt"
-    puts result_file_server
-    run_file_container = 'runfile.txt'
-    puts run_file_container
+    path_to_submit_folder = '/home/thai/www/RailsPR/Project2/submit_code_result'
+    run_file_container = 'test.rb'
     result_file_container = 'result.txt'
-    puts result_file_container
-    run_container = "docker run -d --name #{@name_container} --rm -it #{@name_image} bash"
-    puts run_container
+    # image was build yet
+    run_container = "docker run -d -it --rm --name #{@name_container} -v #{path_to_submit_folder}:/app   #{@name_image} bash"
     if system(run_container) == false
-      1
+      false
     else
-      byebug
-      copy_file(run_file_server, run_file_container, 1)
-      copy_file(result_file_server, result_file_container, 1)
-
-      if run_code(run_file_container, result_file_container)
-        copy_file(result_file_container, @result, 2)
-        return 0
-      else
-        return 2
-      end
+      run_code(run_file_container, result_file_container)
+      # then stop container
+      system("docker stop #{@name_container}")
     end
   end
 
@@ -47,7 +35,7 @@ class RunContainer
   # method to copy file from host to container and reverse
   # source -> string: name source file (not include character /)
   # des -> string: name destination file (not include character /)
-  # type: 1-> host to container 2 -> container to host
+  # type: 1-> host to container (exactly main container to other container), 2 -> container to host(reverse)
   def copy_file(source, des, type)
     copy_file_command = ''
     if type == 1
@@ -62,7 +50,7 @@ class RunContainer
   # runfile : string -> name file keep code to run (not include character /)
   # result : string -> name file to save result (not include character /)
   def run_code(runfile, result)
-    run_code_command = "docker exec -it #{@name_container} ./script.sh #{runfile} #{result} "
+    run_code_command = "docker exec -it #{@name_container} script.sh #{@language} #{runfile} #{result} "
     system(run_code_command)
   end
 end

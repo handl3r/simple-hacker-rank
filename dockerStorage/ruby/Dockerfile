@@ -4,16 +4,16 @@ WORKDIR /app
 #COPY ./ruby/result.txt /app/result.txt
 RUN apt-get update
 RUN apt-get install bc
-COPY ./script.sh /app/script.sh
-RUN chmod +x script.sh
+COPY ./script.sh /usr/bin/script.sh
+RUN chmod +x /usr/bin/script.sh
 #ENTRYPOINT ["./script.sh"]
 #, "ruby", "/app/runfile.rb", "/app/result.txt"
 #docker exec -it ruby_container echo "s"
 #Note :
 # in dockerStorage run:
-# Step1, docker build -t testuby2 -f ruby/Dockerfile .   -> to build image has name : testuby2
-# Step2, docker run -d --name ruby_container --rm -it testuby2 bash   -> to run container has name: ruby_container
-#form image testuby2
+# Step1, docker build -t project2_ruby_image -f ruby/Dockerfile .   -> to build image has name : project2_ruby_image
+# Step2, docker run -it --name project2_ruby_container -v /home/thai/www/RailsPR/Project2/submit_code_result:/app project2_ruby_image bash   -> to run container has name: project2_ruby_container
+#form image project2_ruby_image
 # Step3, docker attach ruby_container  -> to get into ruby_container
 # Step4, touch a.rb , rouch b , echo 'puts "x"' >> a.rb
 # Step5, docker exec -it ruby_container ./script.sh ruby a.rb b to run script -> get result in file b

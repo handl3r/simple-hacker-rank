@@ -5,6 +5,10 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
         && apt-get install -y nodejs
 RUN apt-get update && \
     apt-get install nano
+RUN apt-get install -y curl
+# install docker CI for comunicate to docker on host
+RUN curl -fsSL https://get.docker.com/ | sh
+#
 
 WORKDIR /my_app
 COPY Gemfile Gemfile.lock /my_app/ 

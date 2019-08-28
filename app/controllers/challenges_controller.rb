@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
 class ChallengesController < ApplicationController
-  def show
-
-  end
+  def show; end
 end
