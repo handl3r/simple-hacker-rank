@@ -39,13 +39,16 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # ---------------- GEMS ADD BY USER ---------------
 
 # Add gem pry-rails for better print
-gem 'pry-rails', :group => :development
+gem 'pry-rails', group: :development
 # Add gem rubocop for convention coding
 gem 'rubocop', '~> 0.74.0', require: false
 # Add gem simplecov to check testing
 gem 'simplecov', require: false, group: :test
 # Add gem faker for seed data
-gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
+# Add gem jquery rails
+gem 'jquery-rails'
+
 
 # --------------------------- END -----------------------------
 
