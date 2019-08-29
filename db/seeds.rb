@@ -4,12 +4,10 @@ require 'faker'
 
 # Make normal user
 (0..50).each do |i|
-  User.create(name: "test#{i}", email: "test#{i}@email.com", admin: false,
-              password_digest: '111111')
+  User.create(name: "test#{i}", email: "test#{i}@email.com",
+              password: '111111',
+              password_confirmation: '111111')
 end
-# Make admin user
-User.create(name: 'admin', email: 'admin@gmail.com', admin: true,
-            password_digest: '111111')
 # Make group Challenge
 (0..5).each do |i|
   Groupchallenge.create(level: i, name: "Level #{i}")
@@ -23,7 +21,7 @@ end
 # Make Passlevel
 users = User.all
 users_pass = users[1..30]
-challenges_pass = Challenge.all[1..80]
+# challenges_pass = Challenge.all[1..80]
 users_pass.each do |user|
   number_pass_challenge = rand(1..80)
   (1..number_pass_challenge).each do |number_pass|
@@ -37,5 +35,5 @@ Challenge.all.each do |challenge|
 end
 # Make language
 5.times do
-Language.create(name: Faker::ProgrammingLanguage.unique.name)
+  Language.create(name: Faker::ProgrammingLanguage.unique.name)
 end

@@ -48,7 +48,8 @@ gem 'simplecov', require: false, group: :test
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 # Add gem jquery rails
 gem 'jquery-rails'
-
+# Add gem devise to authentication user
+gem 'devise'
 
 # --------------------------- END -----------------------------
 
