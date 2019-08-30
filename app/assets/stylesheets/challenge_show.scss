@@ -1,0 +1,62 @@
+.container-show-challenge {
+  background: #065535;
+}
+.CodeMirror {
+  margin-top: 0;
+  padding-right: 0;
+
+}
+.description-challenge {
+  width: 100%;
+  margin-top: 0;
+  padding-top: 0;
+  padding-right: 0;
+}
+.description-card-challenge {
+  width: 100%;
+  text-align: left;
+}
+.question-show-challenge {
+  p {
+    text-decoration: underline;
+    font-weight: bold;
+  }
+}
+.work-space {
+  max-height: 300px;
+}
+.codemirror-part {
+  padding-right: 0;
+  border: 2px groove #0E2F44;
+  border-right: 1px groove black;
+  padding-left: 0;
+}
+.task-answer-view {
+  background: #333333;
+  border-left: 1px groove black;
+  border-top: 2px groove #0E2F44;
+  border-bottom: 2px groove black;
+  color: black;
+  padding-right: 0;
+  padding-left: 0.5em;
+}
+.testcase-list {
+  height: 80%;
+  max-height: 240px;
+}
+.title-testcase {
+  button {
+    color: white;
+    font-weight: bold;
+  }
+  button:focus {
+    color: red!important;
+  }
+}
+.action {
+  height: 20%;
+  .btn-group {
+    float: right;
+    margin-right: 5%;
+  }
+}

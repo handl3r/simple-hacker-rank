@@ -50,6 +50,15 @@ gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 gem 'jquery-rails'
 # Add gem devise to authentication user
 gem 'devise'
+# Add gem bootstrap 4
+gem 'bootstrap', '~> 4.3.1'
+# Add font awesome
+gem 'font_awesome5_rails'
+# Add gem kaminari  and kaminari for bootstrap for paginate
+gem 'kaminari'
+gem 'kaminari-bootstrap'
+# Ad codemirror to show challenge page
+gem 'codemirror-rails'
 
 # --------------------------- END -----------------------------
 

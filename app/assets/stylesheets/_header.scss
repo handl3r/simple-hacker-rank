@@ -1,0 +1,50 @@
+.header-banner {
+  font-family: 'Righteous', cursive;
+}
+.dropdown-toggle::after {
+  display:none;
+}
+.nav-tabs {
+  text-align:center;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+.menu-item {
+  width: 12%;
+  padding-top: 5px;
+  .nav-link {
+    border: 0;
+    color: #e6e6fa;
+    font-weight: 900;
+  }
+}
+.nav-link:hover {
+  text-decoration: none;
+}
+.menu-item:hover {
+  background: #041824;
+  .menu-logo i {
+    color: red;
+  }
+}
+.top-menu {
+  background: #0E2F44;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  ul {
+    width: 100%
+  }
+}
+.fa-fighter-jet {
+  color: #ff8d40;
+  border: white 2px;
+}
+.small-icon {
+  color: #ffa500;
+}
+.nav-tabs {
+  border-bottom: 0px;
+}
+
+

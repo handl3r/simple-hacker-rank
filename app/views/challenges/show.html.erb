@@ -1,4 +1,74 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid container-show-challenge">
 
-<%= link_to 'Edit', edit_challenge_path(@challenge) %> |
-<%= link_to 'Back', challenges_path %>
+  <!--  <div class="row mr-0">-->
+  <!--    <div class="col-md-12">-->
+  <!--      <p id="notice"><%#= notice %></p>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <div class="row mr-0">
+    <div class="col-md-12 description-challenge">
+      <div class="card description-card-challenge">
+        <div class="card-header"><%= @challenge.title %>
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            <p><%= @challenge.content %></p>
+            <hr>
+            <footer class="question-show-challenge">
+              <p><%= @challenge.question %></p>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mr-0 work-space">
+    <div class="col-md-7 codemirror-part">
+         <textarea class="codemirror codex" id="code-mirror">
+         </textarea>
+    </div>
+    <div class="col-md-5 task-answer-view">
+      <div class="testcase-list overflow-auto">
+
+        <div class="accordion" id="accordionExample">
+          <% i = 1 %>
+          <% @testcases.each do |testcase| %>
+            <div class="card-header title-testcase">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne<%= i %>" aria-expanded="true" aria-controls="collapseOne">
+                Testcase <%= i %>
+              </button>
+            </div>
+            <div id="collapseOne<%= i %>" class="collapse " data-parent="#accordionExample">
+              <table class="table table-sm table-dark">
+                <thead>
+                <tr>
+                  <th scope="col">Input</th>
+                  <th scope="col">Output</th>
+                  <th scope="col">Your result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td><%= testcase.input %></td>
+                  <td><%= testcase.output %></td>
+                  <td></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <% i += 1 %>
+          <% end %>
+
+        </div>
+      </div>
+      <div class="action">
+        <div class="btn-group" role="group" aria-label="None">
+          <button type="button" class="btn btn-info test-button">Get some hints</button>
+          <button type="button" class="btn btn-danger test-button">Run Test</button>
+          <button type="button" class="btn btn-success submit-button">Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

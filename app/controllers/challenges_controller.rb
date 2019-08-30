@@ -7,12 +7,15 @@ class ChallengesController < ApplicationController
   # GET /challenges
   # GET /challenges.json
   def index
+    @group_challenges = Groupchallenge.order('id').page(params[:page]).per(1)
     @challenges = Challenge.all
   end
 
   # GET /challenges/1
   # GET /challenges/1.json
-  def show; end
+  def show
+    @testcases = @challenge.testcases
+  end
 
   # GET /challenges/new
   def new

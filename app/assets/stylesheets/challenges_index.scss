@@ -1,0 +1,49 @@
+.index-challenges {
+  background: white;
+  margin-top: 0px;
+  font-family: 'Righteous', cursive;
+}
+.name-top-page h1 {
+  font-family: 'Righteous', cursive;
+  text-align: center;
+  background: #6ab1d8;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-decoration: underline;
+  font-weight: bold;
+}
+.card {
+  display: inline-block;
+  width: 24%;
+  text-align: center;
+  background: whitesmoke;
+}
+.checked-icon {
+  color: green;
+}
+.not-checked-icon {
+}
+.status-pass {
+  color: red;
+}
+.status-not-pass {
+  opacity: 0.5;
+  color: red;
+}
+.content-challenge {
+  font-family: 'Hepta Slab', serif;
+}
+.question-challenge {
+  font-family: 'Hepta Slab', serif;
+  font-weight: bold;
+}
+
+.pagination {
+  span {
+    margin-left: 10px;
+  }
+}
+.pagination-challenge {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}

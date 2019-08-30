@@ -1,0 +1,19 @@
+@import "bootstrap";
+@import 'font_awesome5_webfont';
+@import "header";
+@import "footer";
+@import "challenges_index";
+@import "challenge_show";
+@import "codemirror";
+@import "codemirror/themes/base16-dark";
+// fix size container fluild
+.container-fluid {
+  padding-right:0;
+  padding-left:0;
+  margin-right:auto;
+  margin-left:auto
+}
+body {
+  //background: rgb(43, 61, 82);
+}
+

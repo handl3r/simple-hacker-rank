@@ -1,0 +1,47 @@
+<div class="container-fluid header-banner">
+  <div class="row top-menu mr-0">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs">
+        <li class="nav-item dropdown menu-item">
+          <a class="nav-link dropdown-toggle menu-logo " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <%= fa_icon('fighter-jet', size: '3x') %></a>
+          <div class="dropdown-menu">
+            <% Groupchallenge.all.each do |group| %>
+              <%= link_to group.name, '#', class: 'dropdown-item' %>
+            <% end %>
+          </div>
+        </li>
+        <li class="nav-item menu-item">
+          <a href="#">
+            <div>
+          <span>
+                  <%= fa_icon('user', class: 'small-icon') %>
+          </span>
+              <span class="nav-link">MY PROFILE</span>
+            </div>
+          </a>
+        </li>
+        <li class="nav-item menu-item">
+          <a href="#">
+            <div>
+          <span>
+                  <%= fa_icon('comment', class: 'small-icon') %>
+          </span>
+              <span class="nav-link">FORUM</span>
+            </div>
+          </a>
+        </li>
+        <li class="nav-item menu-item">
+          <a href="#">
+            <div>
+          <span>
+                  <%= fa_icon('trophy', class: 'small-icon') %>
+          </span>
+              <span class="nav-link">LEADERBOARD</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

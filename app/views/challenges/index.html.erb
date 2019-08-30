@@ -1,25 +1,60 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Challenges</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @challenges.each do |challenge| %>
-      <tr>
-        <td><%= link_to 'Show', challenge %></td>
-        <td><%= link_to 'Edit', edit_challenge_path(challenge) %></td>
-        <td><%= link_to 'Destroy', challenge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Challenge', new_challenge_path %>
+<div class="container-fluid index-challenges">
+  <div class="row">
+    <div class="name-top-page col-md-12">
+      <h1>Challenges</h1>
+      <p id="notice"><%= notice %></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-10 offset-md-1">
+      <div class="pagination-challenge">
+        <%= paginate(@group_challenges) %>
+      </div>
+      <div class="list-group-challenges">
+        <% @group_challenges.each do |group| %>
+          <div class="group-challenge">
+            <div class="title-group-challenge">
+              <h2>
+                <%= group.name %>
+              </h2>
+            </div>
+            <div class="challenge-card">
+              <% group.challenges.each do |challenge| %>
+                <div class="card" style="">
+                  <div class="card-body">
+                    <div class="main-card">
+                      <h5 class="card-title"><%= challenge.title %></h5>
+                      <h6 class="card-subtitle mb-2 ">
+                        <% if current_user != nil && current_user.challenges.include?(challenge) %>
+                          <span class="status-pass">Solved</span>
+                          <span><%= fa_icon('check', class: 'checked-icon') %></span>
+                        <% else %>
+                          <span class="status-not-pass">Not yet</span>
+                          <span><%= fa_icon('question-circle', class: 'not-checked-icon') %></span>
+                        <% end %>
+                      </h6>
+                      <p class="card-text content-challenge"><%= challenge.content %></p>
+                      <h6 class="card-subtitle mb-2 question-challenge">
+                        <%= challenge.question[0..30] %>
+                      </h6>
+                    </div>
+                    <hr>
+                    <a href="#" class="card-link">Get a hint</a>
+                    <a href="<%= challenge_path(challenge) %>" class="card-link"> Solve </a>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <%# @challenges.each do |challenge| %>
+      <!--        <tr>-->
+      <!--          <td><%#= link_to 'Show', challenge %></td>-->
+      <!--          <td><%#= link_to 'Edit', edit_challenge_path(challenge) %></td>-->
+      <!--          <td><%#= link_to 'Destroy', challenge, method: :delete, data: {confirm: 'Are you sure?'} %></td>-->
+      <!--        </tr>-->
+      <%# end %>
+    </div>
+  </div>
+</div>
