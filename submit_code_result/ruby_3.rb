@@ -1,2 +1,1 @@
-
-	puts "Hello"
+puts 'x'

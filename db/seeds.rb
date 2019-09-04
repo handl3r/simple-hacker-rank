@@ -30,9 +30,16 @@ users_pass.each do |user|
 end
 # Make testcase for each challenge
 Challenge.all.each do |challenge|
-  Testcase.create(input: (rand(1..10)).to_s, output: (rand(1..20)).to_s,
-                  challenge_id: challenge.id)
+  rand(1..5).times do
+    Testcase.create(input: rand(1..10).to_s, output: rand(1..20).to_s,
+                    challenge_id: challenge.id)
+  end
+
 end
+# Update default-code for challenges
+# Challenge.all.each do |challenge|
+#   challenge.default_code =
+# end
 # Make language
 5.times do
   Language.create(name: Faker::ProgrammingLanguage.unique.name)

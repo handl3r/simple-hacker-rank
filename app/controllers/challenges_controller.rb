@@ -43,7 +43,7 @@ class ChallengesController < ApplicationController
 
   def default_code
     @challenge.testcases.each do |testcase|
-      
+
     end
   end
 
