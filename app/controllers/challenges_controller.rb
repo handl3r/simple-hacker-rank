@@ -41,6 +41,38 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def default_code
+    @challenge.testcases.each do |testcase|
+      
+    end
+  end
+
+  # Action get request post from test-btn & submit-btn
+  def process_post
+    # render json: {  status: 'oke', content: params[:content], language: params[:language] }
+    # Note 1: user_id can not enough so . must use somthings more like time now to identify file
+    # Note 2: Do latter . must add suffix of file to Language table then change this query
+    $PATH_TO_STORAGE_FILE = '/my_app/submit_code_result'
+    file_result = "result_#{current_user.id}.txt"
+    file_code = "#{params[:language]}_#{current_user.id}.rb"
+    query_touch_files = "touch #{$PATH_TO_STORAGE_FILE}/#{file_result} #{$PATH_TO_STORAGE_FILE}/#{file_code}"
+    if !system(query_touch_files) # if can not make files
+      render json: { status: 'fail' }
+      0
+    else
+      file1 = File.open("#{$PATH_TO_STORAGE_FILE}/#{file_code}", "w")
+      file1.puts params[:content]
+      file1.close
+      container = RunContainer.new(params[:language], current_user.id)
+      if container.run
+        data = File.read("#{$PATH_TO_STORAGE_FILE}/#{file_result}")
+        render json: { status: 'oke', content: data }
+      else
+        return 1
+      end
+    end
+  end
+
   # PATCH/PUT /challenges/1
   # PATCH/PUT /challenges/1.json
   def update
@@ -64,6 +96,7 @@ end
       format.json { head :no_content }
     end
   end
+
 
   private
 

@@ -11,7 +11,7 @@
         <div class="card-header"><%= @challenge.title %>
         </div>
         <div class="card-body">
-          <blockquote class="blockquote mb-0">
+          <blockquote class="blockquote mb-0" id="content">
             <p><%= @challenge.content %></p>
             <hr>
             <footer class="question-show-challenge">
@@ -63,9 +63,9 @@
       </div>
       <div class="action">
         <div class="btn-group" role="group" aria-label="None">
-          <button type="button" class="btn btn-info test-button">Get some hints</button>
-          <button type="button" class="btn btn-danger test-button">Run Test</button>
-          <button type="button" class="btn btn-success submit-button">Submit</button>
+          <button type="button" class="btn btn-info test-button" id="hint-btn">Get some hints</button>
+          <button type="button" class="btn btn-danger test-button" id="test-btn">Run Test</button>
+          <button type="button" class="btn btn-success submit-button" id="submit-btn">Submit</button>
         </div>
       </div>
     </div>

@@ -1,0 +1,30 @@
+version: '3.5'
+services:
+  web:
+    container_name: project2_rails
+    build: .
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/my_app
+      - bundler_gems_project2:/usr/local/bundle
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./submit_code_result:/my_app/submit_code_result
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_HOST: mysql
+      DATABASE_USER_NAME: root
+	      DATABASE_PASSWORD: root
+  mysql:
+    image: mysql:5.7
+    container_name: project2_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql:/var/lib/mysql
+volumes:
+  mysql:
+    driver: local
+  bundler_gems_project2:
+    driver: local
