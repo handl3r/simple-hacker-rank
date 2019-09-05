@@ -22,6 +22,7 @@
 //= require_tree .
 $(document).on('turbolinks:load', function () {
     window.codemirror_editors = {};
+    // setup option for codemirror
     $('.codemirror').each(function () {
         var $el = $(this);
         codemirror_editors[$el.attr('id')] = CodeMirror.fromTextArea($el[0],
@@ -32,35 +33,23 @@ $(document).on('turbolinks:load', function () {
                 textWrapping: false,
                 lineNumbers: true,
             });
-        //  call ajax to get default_code
-        var url = window.location.href;
-        var pos = url.lastIndexOf("/");
-        var challenge_id = url.substring(pos+1);
-        console.log(challenge_id);
-        $.ajax({
-            type: 'GET',
-            url: '/default_code',
-            data: {challenge: challenge_id},
-            success: function (response) {
-                // set text for codemirror
-            }
-        });
-        var default_code = 'def mainMethod()\n\tputs "Hello"\nend';
+        // get default code and set to codemirror
+        codemirror = document.querySelector('#code-mirror');
+        var default_code = codemirror.dataset.defaultcode;
+        console.log("dasda:" + default_code);
         codemirror_editors[$el.attr('id')].setValue(default_code);
+        // set even click to buttons to send request to server
         var editor = codemirror_editors[$el.attr('id')];
-
-
         document.getElementById('test-btn').onclick = function (e) {
             var code = editor.getValue();
             $.ajax({
                 type: 'POST',
                 url: '/process',
-                data: {content: code, language: 'ruby' }, // change language when want more language
+                data: {content: code, language: "ruby" }, // change language when want more language
                 success: function (response) {
                     // console.log(code)
-                    console.log(response);
-                    console.log(response.language);
-                    $('#content').text(response.content);
+                    console.log(response.content);
+                    // $('#content').text(response.content);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log('fail')

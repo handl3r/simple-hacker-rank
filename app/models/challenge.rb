@@ -8,4 +8,5 @@ class Challenge < ApplicationRecord
   has_many :passlevels
   has_many :users, :through => :passlevels
   has_many :testcases
+  has_many :defaultcodes
 end

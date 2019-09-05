@@ -60,6 +60,12 @@ gem 'kaminari-bootstrap'
 # Ad codemirror to show challenge page
 gem 'codemirror-rails'
 
+# Gem active-admin for admin pages
+gem 'activeadmin'
+# Plus gem for active-admin
+gem 'cancancan'
+gem 'draper'
+gem 'pundit'
 # --------------------------- END -----------------------------
 
 group :development, :test do

@@ -40,7 +40,27 @@ end
 # Challenge.all.each do |challenge|
 #   challenge.default_code =
 # end
+
 # Make language
-5.times do
-  Language.create(name: Faker::ProgrammingLanguage.unique.name)
+Language.create(name: 'ruby', suffix: '.rb')
+Language.create(name: 'python3', suffix: '.py')
+Language.create(name: 'java', suffix: '.java')
+Language.create(name: 'cplus', suffix: '.cpp')
+Language.create(name: 'go', suffix: '.go')
+
+# Make default code for each challenge and language
+Challenge.all.each do |challenge|
+  default_code_ruby = "def mainMethod()\nend"
+  Defaultcode.create(challenge: challenge,
+                     language: Language.find_by(name: 'ruby'),
+                     code: default_code_ruby)
+
+  default_code_python = "def mainMethod():\n"
+  Defaultcode.create(challenge: challenge,
+                     language: Language.find_by(name: 'python3'),
+                     code: default_code_python)
 end
+
+
+# Make user admin
+AdminUser.create!(email: 'admin@email.com', password: '111111', password_confirmation: '111111') if Rails.env.development?

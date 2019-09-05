@@ -22,9 +22,31 @@
       </div>
     </div>
   </div>
+  <div class="row mr-0 bar-option">
+    <div class="col-md-7 codemirror-action">
+      <div class="dropdown dropdown-language">
+        <button class="btn btn-primary dropdown-toggle btn-choose-lang" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ruby
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <button class="dropdown-item" type="button">ruby</button>
+          <button class="dropdown-item" type="button">python3</button>
+          <button class="dropdown-item" type="button">java</button>
+          <button class="dropdown-item" type="button">cplus</button>
+          <button class="dropdown-item" type="button">go</button>
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 test-notification">
+
+    </div>
+  </div>
   <div class="row mr-0 work-space">
     <div class="col-md-7 codemirror-part">
-         <textarea class="codemirror codex" id="code-mirror" data-default-code="">
+         <textarea class="codemirror codex" id="code-mirror"
+                   data-defaultcode="<%= Defaultcode.find_by(challenge: @challenge, language: Language.find_by(name: 'ruby')).code %>"
+         >
          </textarea>
     </div>
     <div class="col-md-5 task-answer-view">

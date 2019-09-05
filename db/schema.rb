@@ -10,7 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_04_084544) do
+ActiveRecord::Schema.define(version: 2019_09_05_032839) do
+
+  create_table "active_admin_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "admin_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
 
   create_table "challenges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
@@ -20,6 +46,16 @@ ActiveRecord::Schema.define(version: 2019_09_04_084544) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["groupchallenge_id"], name: "index_challenges_on_groupchallenge_id"
+  end
+
+  create_table "defaultcodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "challenge_id"
+    t.bigint "language_id"
+    t.text "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_defaultcodes_on_challenge_id"
+    t.index ["language_id"], name: "index_defaultcodes_on_language_id"
   end
 
   create_table "groupchallenges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -33,6 +69,7 @@ ActiveRecord::Schema.define(version: 2019_09_04_084544) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "suffix"
   end
 
   create_table "passlevels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -67,6 +104,8 @@ ActiveRecord::Schema.define(version: 2019_09_04_084544) do
   end
 
   add_foreign_key "challenges", "groupchallenges"
+  add_foreign_key "defaultcodes", "challenges"
+  add_foreign_key "defaultcodes", "languages"
   add_foreign_key "passlevels", "challenges"
   add_foreign_key "passlevels", "users"
   add_foreign_key "testcases", "challenges"

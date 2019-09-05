@@ -27,14 +27,15 @@
 }
 .codemirror-part {
   padding-right: 0;
-  border: 2px groove #0E2F44;
+  border-left: 2px groove #0E2F44;
+  border-bottom: 2px groove #0E2F44;
   border-right: 1px groove black;
   padding-left: 0;
 }
 .task-answer-view {
   background: #333333;
   border-left: 1px groove black;
-  border-top: 2px groove #0E2F44;
+  //border-top: 2px groove #0E2F44;
   border-bottom: 2px groove black;
   color: black;
   padding-right: 0;
@@ -59,4 +60,19 @@
     float: right;
     margin-right: 5%;
   }
+}
+.bar-option {
+  height: 50px;
+  background: black;
+}
+.codemirror-action {
+}
+.test-notification {
+  background: #333333;
+  border-left: black 2px solid;
+}
+.dropdown-language{
+  float: right;
+  margin-top: 2px;
+  margin-right: 2px;
 }

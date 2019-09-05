@@ -1,4 +1,4 @@
 def mainMethod()
-	"Hello"
+	"dadsa"
 end
 puts mainMethod()
