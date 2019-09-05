@@ -1,1 +1,4 @@
-puts 'x'
+def mainMethod()
+	"Hello"
+end
+puts mainMethod()
