@@ -15,6 +15,15 @@ class ChallengesController < ApplicationController
   # GET /challenges/1.json
   def show
     @testcases = @challenge.testcases
+    default_code = Successcode.find_by(user: current_user,
+                                       language: Language.find_by(name: 'ruby'),
+                                       challenge: @challenge)
+    if default_code != nil
+      @default_code = default_code.code
+    else
+      @default_code = Defaultcode.find_by(challenge: @challenge,
+                                          language: Language.find_by(name: 'ruby')).code
+    end
   end
 
   # GET /challenges/new
@@ -53,6 +62,7 @@ class ChallengesController < ApplicationController
     # render json: {  status: 'oke', content: params[:content], language: params[:language] }
     # Note 1: user_id can not enough so . must use somthings more like time now to identify file
     # Note 2: Do latter . must add suffix of file to Language table then change this query
+
     @challenge = Challenge.find_by(id: params[:challenge])
     $path_to_storage_file = '/my_app/submit_code_result'
     file_result = "result_#{current_user.id}.txt"
@@ -75,15 +85,24 @@ class ChallengesController < ApplicationController
       # Make container to run code of user
       container = RunContainer.new(params[:language], current_user.id)
       container.run
+      # new checker to check this code be post
       checker = Checker.new(@challenge, file_result)
       result = checker.run
-      if params[:submit] == '0' # if run test to check testcase
-        render json: { status: 'check oke', content: result }
+
+      if params[:submit] == '0' # if user post code to test
+        render json: { status: 'check done', content: result }
       elsif params[:submit] == '1' # if submit code to finish this challenge
         if result.last == @challenge.testcases.count # if this code is right
           passlevel = Passlevel.new(user_id: current_user.id, challenge_id: @challenge.id)
+          # save passlevel and render response
           check_passlevel(passlevel, result)
-        else # if not
+          successcode = Successcode.new(user_id: current_user.id,
+                                        language: Language.find_by(name: params[:language]),
+                                        challenge: @challenge,
+                                        code: params[:content])
+          #save of update code to success-code
+          successcode.check_invalid(params[:content])
+        else # if code is not right
           render json: { status: 'submit fail', content: result }
         end
       end
@@ -127,10 +146,11 @@ class ChallengesController < ApplicationController
     params.fetch(:challenge, {})
   end
 
+  # THis method use to render result and message for user
   def check_passlevel(passlevel, result)
-    if passlevel.save
+    if passlevel.save # if user did not finish this challenge before
       render json: { status: 'submit done', content: result }
-    else
+    else # if user finished this challenge before
       render json: { status: 're-submit done', content: result }
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_05_032839) do
+ActiveRecord::Schema.define(version: 2019_09_11_083030) do
 
   create_table "active_admin_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "namespace"
@@ -81,6 +81,18 @@ ActiveRecord::Schema.define(version: 2019_09_05_032839) do
     t.index ["user_id"], name: "index_passlevels_on_user_id"
   end
 
+  create_table "successcodes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "challenge_id"
+    t.bigint "language_id"
+    t.text "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_successcodes_on_challenge_id"
+    t.index ["language_id"], name: "index_successcodes_on_language_id"
+    t.index ["user_id"], name: "index_successcodes_on_user_id"
+  end
+
   create_table "testcases", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "input"
     t.string "output"
@@ -108,5 +120,8 @@ ActiveRecord::Schema.define(version: 2019_09_05_032839) do
   add_foreign_key "defaultcodes", "languages"
   add_foreign_key "passlevels", "challenges"
   add_foreign_key "passlevels", "users"
+  add_foreign_key "successcodes", "challenges"
+  add_foreign_key "successcodes", "languages"
+  add_foreign_key "successcodes", "users"
   add_foreign_key "testcases", "challenges"
 end

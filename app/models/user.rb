@@ -14,4 +14,5 @@ class User < ApplicationRecord
   # Associations ==============================
   has_many :passlevels
   has_many :challenges, :through => :passlevels
+  has_many :successcodes
 end

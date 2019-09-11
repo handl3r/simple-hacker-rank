@@ -50,7 +50,7 @@
   <div class="row mr-0 work-space">
     <div class="col-md-7 codemirror-part">
          <textarea class="codemirror codex" id="code-mirror"
-                   data-defaultcode="<%= Defaultcode.find_by(challenge: @challenge, language: Language.find_by(name: 'ruby')).code %>"
+                   data-defaultcode="<%= @default_code %>"
                    data-challenge="<%= @challenge.id %>"
          >
          </textarea>
