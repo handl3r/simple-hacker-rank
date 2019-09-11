@@ -53,25 +53,39 @@ class ChallengesController < ApplicationController
     # render json: {  status: 'oke', content: params[:content], language: params[:language] }
     # Note 1: user_id can not enough so . must use somthings more like time now to identify file
     # Note 2: Do latter . must add suffix of file to Language table then change this query
-
+    @challenge = Challenge.find_by(id: params[:challenge])
     $path_to_storage_file = '/my_app/submit_code_result'
     file_result = "result_#{current_user.id}.txt"
     file_code = "#{params[:language]}_#{current_user.id}.rb"
     query_touch_files = "touch #{$path_to_storage_file}/#{file_result} #{$path_to_storage_file}/#{file_code}"
     if !system(query_touch_files) # if can not make files
-      render json: {status: 'fail'}
+      render json: { status: 'fail' }
       0
     else
       file1 = File.open("#{$path_to_storage_file}/#{file_code}", "w")
       file1.puts params[:content]
-
       file1.close
-      container = RunContainer.new(params[:language], current_user.id)
-      if container.run
-        data = File.read("#{$path_to_storage_file}/#{file_result}")
-        render json: {status: 'oke', content: data}
+      processor = ProcessorFile.new(file_code, @challenge)
+      # process file before run
+      if params[:language] == 'ruby'
+        processor.process_ruby
       else
-        return 1
+        # Call different method to process another languages
+      end
+      # Make container to run code of user
+      container = RunContainer.new(params[:language], current_user.id)
+      container.run
+      checker = Checker.new(@challenge, file_result)
+      result = checker.run
+      if params[:submit] == '0' # if run test to check testcase
+        render json: { status: 'check oke', content: result }
+      elsif params[:submit] == '1' # if submit code to finish this challenge
+        if result.last == @challenge.testcases.count # if this code is right
+          passlevel = Passlevel.new(user_id: current_user.id, challenge_id: @challenge.id)
+          check_passlevel(passlevel, result)
+        else # if not
+          render json: { status: 'submit fail', content: result }
+        end
       end
     end
   end
@@ -111,5 +125,13 @@ class ChallengesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def challenge_params
     params.fetch(:challenge, {})
+  end
+
+  def check_passlevel(passlevel, result)
+    if passlevel.save
+      render json: { status: 'submit done', content: result }
+    else
+      render json: { status: 're-submit done', content: result }
+    end
   end
 end

@@ -39,13 +39,19 @@
       </div>
     </div>
     <div class="col-md-5 test-notification">
-
+      <div class="title-noti">
+        <strong>        Result:
+        </strong>
+        <span id="result">
+        </span>
+      </div>
     </div>
   </div>
   <div class="row mr-0 work-space">
     <div class="col-md-7 codemirror-part">
          <textarea class="codemirror codex" id="code-mirror"
                    data-defaultcode="<%= Defaultcode.find_by(challenge: @challenge, language: Language.find_by(name: 'ruby')).code %>"
+                   data-challenge="<%= @challenge.id %>"
          >
          </textarea>
     </div>
@@ -56,7 +62,7 @@
           <% i = 1 %>
           <% @testcases.each do |testcase| %>
             <div class="card-header title-testcase">
-              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne<%= i %>" aria-expanded="true" aria-controls="collapseOne">
+              <button class="btn btn-link btn-testcase" id="testcase-<%= i %>" type="button" data-toggle="collapse" data-target="#collapseOne<%= i %>" aria-expanded="true" aria-controls="collapseOne">
                 Testcase <%= i %>
               </button>
             </div>
@@ -72,8 +78,8 @@
                 <tbody>
                 <tr>
                   <td><%= testcase.input %></td>
-                  <td><%= testcase.output %></td>
-                  <td></td>
+                  <td id="output-<%= i %>"><%= testcase.output %></td>
+                  <td id="result-<%= i %>"></td>
                 </tr>
                 </tbody>
               </table>

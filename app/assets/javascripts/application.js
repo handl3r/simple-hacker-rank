@@ -36,7 +36,7 @@ $(document).on('turbolinks:load', function () {
         // get default code and set to codemirror
         codemirror = document.querySelector('#code-mirror');
         var default_code = codemirror.dataset.defaultcode;
-        console.log("dasda:" + default_code);
+        var challenge_id = codemirror.dataset.challenge;
         codemirror_editors[$el.attr('id')].setValue(default_code);
         // set even click to buttons to send request to server
         var editor = codemirror_editors[$el.attr('id')];
@@ -45,11 +45,60 @@ $(document).on('turbolinks:load', function () {
             $.ajax({
                 type: 'POST',
                 url: '/process',
-                data: {content: code, language: "ruby" }, // change language when want more language
+                data: {challenge: challenge_id, content: code, language: "ruby", submit: '0'}, // change language when want more language
                 success: function (response) {
-                    // console.log(code)
-                    console.log(response.content);
-                    // $('#content').text(response.content);
+                    var result = response.content;
+                    var length_result = result.length;
+                    var temp = 1;
+                    for (temp = 1; temp < length_result; temp++) {
+                        var id_cpn = "#result-" + temp;
+                        var id_btn = "testcase-" + temp;
+                        var id_output = "#output-" + temp;
+                        var output = $(id_output).text();
+                        if (output.replace(/ /g,'') === result[temp - 1].replace(/ /g,'')) {
+                            document.getElementById(id_btn).style.color = '#28a745';
+                        } else {
+                            document.getElementById(id_btn).style.color = 'red';
+                        }
+                        $(id_cpn).text(result[temp - 1]);
+                    }
+                    $('#result').text(result[length_result - 1] + "/" + (length_result - 1));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('fail')
+                }
+            })
+        };
+        document.getElementById('submit-btn').onclick =function (e) {
+            var code = editor.getValue();
+            $.ajax({
+                type: 'POST',
+                url: '/process',
+                data: {challenge: challenge_id, content: code, language: "ruby", submit: '1'}, // change language when want more language
+                success: function (response) {
+                    var result = response.content;
+                    var length_result = result.length;
+                    var temp = 1;
+                    for (temp = 1; temp < length_result; temp++) {
+                        var id_cpn = "#result-" + temp;
+                        var id_btn = "testcase-" + temp;
+                        var id_output = "#output-" + temp;
+                        var output = $(id_output).text();
+                        if (output.replace(/ /g,'') === result[temp - 1].replace(/ /g,'')) {
+                            document.getElementById(id_btn).style.color = '#28a745';
+                        } else {
+                            document.getElementById(id_btn).style.color = 'red';
+                        }
+                        $(id_cpn).text(result[temp - 1]);
+                    }
+                    $('#result').text(result[length_result - 1] + "/" + (length_result - 1));
+                    if (response.status === 'submit done') {
+                        alert('Finished challenge!')
+                    } else if (response.status === 'submit fail') {
+                        alert('Check your code!')
+                    } else if (response.status === 're-submit done') {
+                        alert('Re-submit done')
+                    }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log('fail')
