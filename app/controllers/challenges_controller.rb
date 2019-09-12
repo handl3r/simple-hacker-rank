@@ -102,19 +102,25 @@ class ChallengesController < ApplicationController
       checker = Checker.new(@challenge, file_result)
       result = checker.run
 
+      # response result and save code of user submit if user submit code right
       if params[:submit] == '0' # if user post code to test
         render json: { status: 'check done', content: result }
       elsif params[:submit] == '1' # if submit code to finish this challenge
         if result.last == @challenge.testcases.count # if this code is right
           passlevel = Passlevel.new(user_id: current_user.id, challenge_id: @challenge.id)
+
           # save passlevel and render response
           check_passlevel(passlevel, result)
           successcode = Successcode.new(user_id: current_user.id,
                                         language: Language.find_by(name: params[:language]),
                                         challenge: @challenge,
                                         code: params[:content])
+
           #save of update code to success-code
           successcode.check_invalid(params[:content])
+
+          # remove files
+
         else # if code is not right
           render json: { status: 'submit fail', content: result }
         end
@@ -159,7 +165,7 @@ class ChallengesController < ApplicationController
     params.fetch(:challenge, {})
   end
 
-  # THis method use to render result and message for user
+  # This method use to render result and message for user
   def check_passlevel(passlevel, result)
     if passlevel.save # if user did not finish this challenge before
       render json: { status: 'submit done', content: result }
