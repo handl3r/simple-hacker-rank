@@ -173,4 +173,14 @@ class ChallengesController < ApplicationController
       render json: { status: 're-submit done', content: result }
     end
   end
+
+  #-----------------------------------------------
+  # This method to clear files after done jobs.
+  # Note : Must fix name of result because if a use test/submit code
+  # by a language and then do it with different language
+  # -> so result file will be overwrite
+  #-----------------------------------------------
+  def clear
+
+  end
 end
