@@ -22,6 +22,7 @@
 //= require_tree .
 $(document).on('turbolinks:load', function () {
     window.codemirror_editors = {};
+
     // setup option for codemirror
     $('.codemirror').each(function () {
         var $el = $(this);
@@ -33,19 +34,31 @@ $(document).on('turbolinks:load', function () {
                 textWrapping: false,
                 lineNumbers: true,
             });
+
         // get default code and set to codemirror
         codemirror = document.querySelector('#code-mirror');
         var default_code = codemirror.dataset.defaultcode;
         var challenge_id = codemirror.dataset.challenge;
         codemirror_editors[$el.attr('id')].setValue(default_code);
+
         // set even click to buttons to send request to server
         var editor = codemirror_editors[$el.attr('id')];
+
+        // get language be selected
+        var language = 'ruby';
+        $('#dropdownlanguage .dropdown-menu .dropdown-item').click(function () {
+            language = $(this).text();
+            console.log(language);
+
+        // process event when click test button
         document.getElementById('test-btn').onclick = function (e) {
             var code = editor.getValue();
+
+            // call ajax
             $.ajax({
                 type: 'POST',
                 url: '/process',
-                data: {challenge: challenge_id, content: code, language: "ruby", submit: '0'}, // change language when want more language
+                data: {challenge: challenge_id, content: code, language: language, submit: '0'}, // change language when want more language
                 success: function (response) {
                     var result = response.content;
                     var length_result = result.length;
@@ -55,7 +68,7 @@ $(document).on('turbolinks:load', function () {
                         var id_btn = "testcase-" + temp;
                         var id_output = "#output-" + temp;
                         var output = $(id_output).text();
-                        if (output.replace(/ /g,'') === result[temp - 1].replace(/ /g,'')) {
+                        if (output.replace(/ /g, '') === result[temp - 1].replace(/ /g, '')) {
                             document.getElementById(id_btn).style.color = '#28a745';
                         } else {
                             document.getElementById(id_btn).style.color = 'red';
@@ -69,12 +82,31 @@ $(document).on('turbolinks:load', function () {
                 }
             })
         };
-        document.getElementById('submit-btn').onclick =function (e) {
+
+
+            // call jax to get default code form server
+            $.ajax({
+                type: 'POST',
+                url: '/default_code',
+                data: {language: language, challenge: challenge_id },
+                success: function (response) {
+                    // response struct : { status: 'status code', content: defaultcode}
+                    // fill code to update default code of language to codemirror
+                    var update_default_code = response.content;
+                    codemirror_editors[$el.attr('id')].setValue(update_default_code);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('fail to load default_code')
+                }
+            })
+        });
+
+        document.getElementById('submit-btn').onclick = function (e) {
             var code = editor.getValue();
             $.ajax({
                 type: 'POST',
                 url: '/process',
-                data: {challenge: challenge_id, content: code, language: "ruby", submit: '1'}, // change language when want more language
+                data: {challenge: challenge_id, content: code, language: language, submit: '1'}, // change language when want more language
                 success: function (response) {
                     var result = response.content;
                     var length_result = result.length;
@@ -84,7 +116,7 @@ $(document).on('turbolinks:load', function () {
                         var id_btn = "testcase-" + temp;
                         var id_output = "#output-" + temp;
                         var output = $(id_output).text();
-                        if (output.replace(/ /g,'') === result[temp - 1].replace(/ /g,'')) {
+                        if (output.replace(/ /g, '') === result[temp - 1].replace(/ /g, '')) {
                             document.getElementById(id_btn).style.color = '#28a745';
                         } else {
                             document.getElementById(id_btn).style.color = 'red';
@@ -104,7 +136,7 @@ $(document).on('turbolinks:load', function () {
                     console.log('fail')
                 }
             })
-        }
+        };
     });
 });
 

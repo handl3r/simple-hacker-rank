@@ -6,7 +6,7 @@
 class RunContainer
   SOURCE = 'run_file.rb'
   DES = 'result.rb'
-  # This constant must be redefine onserver
+  # This constant must be redefine on server
   $submit_code_result_folder = '/home/thai/www/RailsPR/Project2/submit_code_result'
   TEMP_CONTAINER_FOLDER = '/app'
 
@@ -16,17 +16,23 @@ class RunContainer
     @language = language
     @name_image = "#{language}_image"
     @name_container = "#{language}_container_#{id}"
-    @run_file = "#{language}_#{id}.rb"
+    suffix_language = Language.find_by(name: language).suffix
+    @run_file = "#{language}_#{id}#{suffix_language}"
     @result = "result_#{id}.txt"
   end
 
   # main method to run a container and run code inside it
   def run
+    byebug
     run_container = "docker run -d -it --rm --name #{@name_container} -v #{$submit_code_result_folder}:#{TEMP_CONTAINER_FOLDER}   #{@name_image} bash"
+    byebug
     if !system(run_container)
+      byebug
       false
     else
+      byebug
       run_code(@run_file, @result)
+      byebug
       # then stop container
       system("docker stop #{@name_container}")
       true

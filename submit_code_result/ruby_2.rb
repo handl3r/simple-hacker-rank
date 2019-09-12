@@ -1,9 +1,11 @@
-# method return the last charater of str
-def mainMethod( str)
+# finish this method  
+def mainMethod(a, b)
     # fill your code here
-  str[-1]
+  a + b
 end
 
-puts mainMethod("thai").to_s
+puts mainMethod(100, 200).to_s
 
-puts mainMethod("dasbgsasg dsabhvjdsabh").to_s
+puts mainMethod(-42, 10).to_s
+
+puts mainMethod(102, 201).to_s

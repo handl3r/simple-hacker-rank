@@ -18,7 +18,7 @@ class ChallengesController < ApplicationController
     default_code = Successcode.find_by(user: current_user,
                                        language: Language.find_by(name: 'ruby'),
                                        challenge: @challenge)
-    if default_code != nil
+    if !default_code.nil?
       @default_code = default_code.code
     else
       @default_code = Defaultcode.find_by(challenge: @challenge,
@@ -52,21 +52,30 @@ class ChallengesController < ApplicationController
   end
 
   def default_code
-    @challenge.testcases.each do |testcase|
-
+    @challenge = Challenge.find_by(id: params[:challenge])
+    @language = Language.find_by(name: params[:language])
+    default_code = Successcode.find_by(user: current_user,
+                                       language: @language,
+                                       challenge: @challenge)
+    if !default_code.nil?
+      @default_code = default_code.code
+    else
+      @default_code = Defaultcode.find_by(challenge: @challenge,
+                                          language: @language).code
     end
+    render json: { status: 'success', content: @default_code}
   end
 
   # Action get request post from test-btn & submit-btn
   def process_post
     # render json: {  status: 'oke', content: params[:content], language: params[:language] }
-    # Note 1: user_id can not enough so . must use somthings more like time now to identify file
-    # Note 2: Do latter . must add suffix of file to Language table then change this query
+    # Note 1: user_id can not enough so . must use somethings more like time now to identify file
 
     @challenge = Challenge.find_by(id: params[:challenge])
+    suffix_language = Language.find_by(name: params[:language]).suffix
     $path_to_storage_file = '/my_app/submit_code_result'
     file_result = "result_#{current_user.id}.txt"
-    file_code = "#{params[:language]}_#{current_user.id}.rb"
+    file_code = "#{params[:language]}_#{current_user.id}#{suffix_language}"
     query_touch_files = "touch #{$path_to_storage_file}/#{file_result} #{$path_to_storage_file}/#{file_code}"
     if !system(query_touch_files) # if can not make files
       render json: { status: 'fail' }
@@ -75,17 +84,23 @@ class ChallengesController < ApplicationController
       file1 = File.open("#{$path_to_storage_file}/#{file_code}", "w")
       file1.puts params[:content]
       file1.close
-      processor = ProcessorFile.new(file_code, @challenge)
+
       # process file before run
+      processor = ProcessorFile.new(file_code, @challenge)
       if params[:language] == 'ruby'
         processor.process_ruby
-      else
+      elsif params[:language] == 'python3'
+        processor.process_python3
         # Call different method to process another languages
       end
+
       # Make container to run code of user
+      byebug
       container = RunContainer.new(params[:language], current_user.id)
+      byebug
       container.run
-      # new checker to check this code be post
+
+      # Checker to check this code be post
       checker = Checker.new(@challenge, file_result)
       result = checker.run
 
