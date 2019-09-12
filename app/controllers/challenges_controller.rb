@@ -95,9 +95,7 @@ class ChallengesController < ApplicationController
       end
 
       # Make container to run code of user
-      byebug
       container = RunContainer.new(params[:language], current_user.id)
-      byebug
       container.run
 
       # Checker to check this code be post

@@ -49,6 +49,7 @@ $(document).on('turbolinks:load', function () {
         $('#dropdownlanguage .dropdown-menu .dropdown-item').click(function () {
             language = $(this).text();
             console.log(language);
+            $('.btn-choose-lang').text(language);
 
         // process event when click test button
         document.getElementById('test-btn').onclick = function (e) {

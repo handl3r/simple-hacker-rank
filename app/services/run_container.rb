@@ -23,16 +23,11 @@ class RunContainer
 
   # main method to run a container and run code inside it
   def run
-    byebug
     run_container = "docker run -d -it --rm --name #{@name_container} -v #{$submit_code_result_folder}:#{TEMP_CONTAINER_FOLDER}   #{@name_image} bash"
-    byebug
     if !system(run_container)
-      byebug
       false
     else
-      byebug
       run_code(@run_file, @result)
-      byebug
       # then stop container
       system("docker stop #{@name_container}")
       true

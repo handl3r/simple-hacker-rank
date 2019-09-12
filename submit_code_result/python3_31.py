@@ -1,8 +1,7 @@
-# Finish this method to return sum of 2 numbers
-def mainMethod(a, b):
-    # Fill your code here
-    return a + b
+def mainMethod( array):
+    array.sort()
+    return array
 
-print(mainMethod(2, 4))
+print(mainMethod([-2,1,-2]))
 
-print(mainMethod(10, -4))
+print(mainMethod([2, 4, 1, -2]))
