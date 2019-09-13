@@ -91,7 +91,8 @@ class ChallengesController < ApplicationController
         processor.process_ruby
       elsif params[:language] == 'python3'
         processor.process_python3
-
+      elsif params[:language] == 'go'
+        processor.process_golang
         # Call different method to process another languages
       end
 

@@ -28,4 +28,15 @@ class ProcessorFile
     end
     file1.close
   end
+
+  # Process file go
+  def process_golang
+    file1 = File.open(@file, 'a')
+    @challenge.testcases.each do |testcase|
+      args = testcase.input
+      call_method = "\nfmt.Println(mainMethod(#{args}) \n"
+      file1.puts call_method
+    end
+    file1.close
+  end
 end

@@ -59,6 +59,11 @@ Challenge.all.each do |challenge|
   Defaultcode.create(challenge: challenge,
                      language: Language.find_by(name: 'python3'),
                      code: default_code_python)
+
+  default_code_go = 'import ' + '"fmt"' + "\nfunction mainMethod(){\n}\n"
+  Defaultcode.create(challenge: challenge,
+                     language: Language.find_by(name: 'go'),
+                     code: default_code_go)
 end
 
 

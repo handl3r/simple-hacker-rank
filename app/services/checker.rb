@@ -15,8 +15,12 @@ class Checker
     right_number = 0
     result = []
     @challenge.testcases.each do |testcase|
-      right_number += 1 if testcase.output.delete(" \t\r\n") == file1[temp_i].delete(" \t\r\n")
-      result.append(file1[temp_i].rstrip)
+      if !file1[temp_i].nil?
+        right_number += 1 if testcase.output.delete(" \t\r\n") == file1[temp_i].delete(" \t\r\n")
+        result.append(file1[temp_i].rstrip)
+      else
+        result.append("error")
+      end
       temp_i += 1
     end
     result[temp_i] = right_number
