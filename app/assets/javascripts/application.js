@@ -54,7 +54,7 @@ $(document).on('turbolinks:load', function () {
         // process event when click test button
         document.getElementById('test-btn').onclick = function (e) {
             var code = editor.getValue();
-
+            console.log("fail to click test button");
             // call ajax
             $.ajax({
                 type: 'POST',

@@ -6,7 +6,8 @@
 class RunContainer
   SOURCE = 'run_file.rb'
   DES = 'result.rb'
-  # This constant must be redefine on server
+
+  # This constant must be re-define on server
   $submit_code_result_folder = '/home/thai/www/RailsPR/Project2/submit_code_result'
   TEMP_CONTAINER_FOLDER = '/app'
 
@@ -18,7 +19,7 @@ class RunContainer
     @name_container = "#{language}_container_#{id}"
     suffix_language = Language.find_by(name: language).suffix
     @run_file = "#{language}_#{id}#{suffix_language}"
-    @result = "result_#{id}.txt"
+    @result = "result_#{language}_#{id}.txt"
   end
 
   # main method to run a container and run code inside it

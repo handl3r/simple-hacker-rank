@@ -74,7 +74,7 @@ class ChallengesController < ApplicationController
     @challenge = Challenge.find_by(id: params[:challenge])
     suffix_language = Language.find_by(name: params[:language]).suffix
     $path_to_storage_file = '/my_app/submit_code_result'
-    file_result = "result_#{current_user.id}.txt"
+    file_result = "result_#{params[:language]}_#{current_user.id}.txt"
     file_code = "#{params[:language]}_#{current_user.id}#{suffix_language}"
     query_touch_files = "touch #{$path_to_storage_file}/#{file_result} #{$path_to_storage_file}/#{file_code}"
     if !system(query_touch_files) # if can not make files
@@ -91,6 +91,7 @@ class ChallengesController < ApplicationController
         processor.process_ruby
       elsif params[:language] == 'python3'
         processor.process_python3
+
         # Call different method to process another languages
       end
 
