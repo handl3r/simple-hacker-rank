@@ -102,7 +102,7 @@ class ChallengesController < ApplicationController
       checker = Checker.new(@challenge, file_result)
       result = checker.run
 
-      # response result and save code of user submit if user submit code right
+      # Response result and save code of user submit if user submit code right
       if params[:submit] == '0' # if user post code to test
         render json: { status: 'check done', content: result }
       elsif params[:submit] == '1' # if submit code to finish this challenge
