@@ -120,12 +120,12 @@ class ChallengesController < ApplicationController
           #save of update code to success-code
           successcode.check_invalid(params[:content])
 
-          # remove files
-
         else # if code is not right
           render json: { status: 'submit fail', content: result }
         end
       end
+      # remove files
+      clear(file_code, file_result)
     end
   end
 
@@ -177,11 +177,10 @@ class ChallengesController < ApplicationController
 
   #-----------------------------------------------
   # This method to clear files after done jobs.
-  # Note : Must fix name of result because if a use test/submit code
-  # by a language and then do it with different language
-  # -> so result file will be overwrite
   #-----------------------------------------------
-  def clear
-
+  def clear(code_file, result_file)
+    # chown for delete file
+    query_delete_file = "rm #{$path_to_storage_file}/#{code_file} #{$path_to_storage_file}/#{result_file}"
+    system(query_delete_file)
   end
 end
