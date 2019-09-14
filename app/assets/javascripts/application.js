@@ -37,7 +37,7 @@ $(document).on('turbolinks:load', function () {
             });
 
         // get default code and set to codemirror
-        codemirror = document.querySelector('#code-mirror');
+        var codemirror = document.querySelector('#code-mirror');
         var default_code = codemirror.dataset.defaultcode;
         var challenge_id = codemirror.dataset.challenge;
         codemirror_editors[$el.attr('id')].setValue(default_code);
@@ -51,6 +51,23 @@ $(document).on('turbolinks:load', function () {
             language = $(this).text();
             console.log(language);
             $('.btn-choose-lang').text(language);
+
+            // call ajax to get default-code form server
+            $.ajax({
+                type: 'POST',
+                url: '/default_code',
+                data: {language: language, challenge: challenge_id},
+                success: function (response) {
+                    // response struct : { status: 'status code', content: defaultcode}
+                    // fill code to update default code of language to codemirror
+                    var update_default_code = response.content;
+                    codemirror_editors[$el.attr('id')].setValue(update_default_code);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('fail to load default_code')
+                }
+            });
+
         });
         // process event when click test button
         document.getElementById('test-btn').onclick = function (e) {
@@ -84,24 +101,6 @@ $(document).on('turbolinks:load', function () {
                 }
             })
         };
-
-
-        // call jax to get default code form server
-        $.ajax({
-            type: 'POST',
-            url: '/default_code',
-            data: {language: language, challenge: challenge_id},
-            success: function (response) {
-                // response struct : { status: 'status code', content: defaultcode}
-                // fill code to update default code of language to codemirror
-                var update_default_code = response.content;
-                codemirror_editors[$el.attr('id')].setValue(update_default_code);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log('fail to load default_code')
-            }
-        });
-
 
         document.getElementById('submit-btn').onclick = function (e) {
             var code = editor.getValue();
