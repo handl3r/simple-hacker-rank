@@ -32,8 +32,7 @@ class ChallengesController < ApplicationController
   end
 
   # GET /challenges/1/edit
-  def edit;
-  end
+  def edit; end
 
   # POST /challenges
   # POST /challenges.json
@@ -81,7 +80,7 @@ class ChallengesController < ApplicationController
       render json: { status: 'fail' }
       0
     else
-      file1 = File.open("#{$path_to_storage_file}/#{file_code}", "w")
+      file1 = File.open("#{$path_to_storage_file}/#{file_code}", 'w')
       file1.puts params[:content]
       file1.close
 
