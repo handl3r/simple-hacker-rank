@@ -1,7 +1,7 @@
 <div class="container-fluid header-banner">
   <div class="row top-menu mr-0">
     <div class="col-md-12">
-      <ul class="nav nav-tabs">
+      <ul class="nav nav-tabs ul-list-menu">
         <li class="nav-item dropdown menu-item">
           <a class="nav-link dropdown-toggle menu-logo " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <%= fa_icon('fighter-jet', size: '3x') %></a>
@@ -12,7 +12,7 @@
           </div>
         </li>
         <li class="nav-item menu-item">
-          <a href="#">
+          <a href="<%= user_path(current_user) if !current_user.nil? %>">
             <div>
           <span>
                   <%= fa_icon('user', class: 'small-icon') %>
@@ -51,6 +51,32 @@
             </div>
           </a>
         </li>
+        <% if !current_user.nil? %>
+          <li class="sign-out-in">
+            <a href="<%= user_path(current_user) %>">
+              <span class="name-user" title="Show your profile">
+              <strong>Hello</strong><strong> <%= current_user.name %></strong>
+              </span>
+            </a>
+
+            <a href="<%= destroy_user_session_path %>" data-method="delete">
+          <span>
+                  <%= fa_icon('sign-out-alt', class: 'sign-out-icon') %>
+          </span>
+            </a>
+          </li>
+        <% else %>
+          <li class="sign-out-in">
+            <a href="<%= login_path %>">
+              <span class="sign-in" title="Sign in here">
+              <strong>Sign in</strong>
+            </span>
+          <span>
+                  <%= fa_icon('sign-in-alt', class: 'sign-out-icon') %>
+          </span>
+            </a>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

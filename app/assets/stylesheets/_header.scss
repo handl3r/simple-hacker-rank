@@ -46,5 +46,23 @@
 .nav-tabs {
   border-bottom: 0px;
 }
+.sign-out-in {
+  color: white;
+  margin-left: 30%;
+  padding-top: 1em;
+}
+.ul-list-menu {
+}
+.name-user {
+  margin-right: 10px;
+  strong {
+    text-decoration: underline;
+    color: red;
+  }
+  :hover {
+    cursor: pointer;
+
+  }
+}
 
 

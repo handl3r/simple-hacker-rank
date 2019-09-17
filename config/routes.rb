@@ -4,11 +4,11 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   devise_for :users, controllers: { sessions: 'users/sessions' }
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   devise_scope :user do
-    get 'login', to: 'devise/sessions#new'
-    get 'sign_up', to: 'devise/registrations#new'
+    get 'login', to: 'users/sessions#new'
+    get 'sign_up', to: 'users/registrations#new'
   end
+  resources :users, only: [:show]
   resources :challenges #, only: %i[show index]
   root to: 'challenges#index'
 

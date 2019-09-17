@@ -117,7 +117,7 @@ class ChallengesController < ApplicationController
                                         challenge: @challenge,
                                         code: params[:content])
 
-          #save of update code to success-code
+          # save of update code to success-code
           successcode.check_invalid(params[:content])
 
         else # if code is not right
