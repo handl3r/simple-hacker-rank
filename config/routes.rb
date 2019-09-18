@@ -11,12 +11,11 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :challenges #, only: %i[show index]
   root to: 'challenges#index'
-
+  get 'forum', to: 'forum#home'
   # Post to /process to test and submit code of user
   post 'process', to: 'challenges#process_post'
 
   # Post to /default_code to get default code of challange from server
   post 'default_code', to: 'challenges#default_code'
-
   get 'default_code', to: 'challenges#default_code'
 end
