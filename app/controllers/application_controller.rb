@@ -24,8 +24,4 @@ class ApplicationController < ActionController::Base
                :avatar)
     end
   end
-
-
-
-
 end
