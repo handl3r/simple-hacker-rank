@@ -3,11 +3,9 @@
     <div class="row">
       <div class="col-md-4">
         <div class="profile-img">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
-          <div class="file btn btn-lg btn-primary">
-            Change Photo
-            <input type="file" name="file"/>
-          </div>
+           <% if @user.avatar.attached? %>
+            <%= image_tag @user.avatar, class: "" %>
+          <% end %>
         </div>
       </div>
       <div class="col-md-6">
@@ -30,7 +28,9 @@
         </div>
       </div>
       <div class="col-md-2">
-        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+        <a href="<%= edit_user_registration_path %>">
+          <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+        </a>
       </div>
     </div>
     <div class="row">
