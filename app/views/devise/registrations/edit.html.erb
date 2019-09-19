@@ -3,7 +3,9 @@
     <div class="row">
       <div class="col-md-2 offset-md-1 image-avatar">
         <% if resource.avatar.attached? %>
-          <%= image_tag resource.avatar, class: "rounded-circle", height: 200, width: 200 %>
+          <%= image_tag resource.avatar, class: "rounded", height: 200, width: 200 %>
+        <% else %>
+          <%= image_tag( "http://icons.iconarchive.com/icons/sbstnblnd/plateau/256/Apps-aqualung-icon.png",  class: "rounded", height: 200, width: 200 )%>
         <% end %>
       </div>
       <div class="col-md-6 offset-md-1">

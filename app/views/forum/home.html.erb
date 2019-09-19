@@ -1,2 +1,58 @@
-<h1>Forum#home</h1>
-<p>Find me in app/views/forum/home.html.erb</p>
+<div class="container-fluid home-forum">
+  <div class="row">
+    <div class="name-top-page col-md-12">
+      <h1>Forum</h1>
+      <p id="notice"><%= notice %></p>
+    </div>
+  </div>
+  <div class="container main-home-forum">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="menu-action">
+          <!--        fill code menu-action here-->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="posts">
+          <% @posts.each do |post| %>
+            <% user = post.user %>
+            <div class="box-post">
+              <div class="image-user">
+                <% if user.avatar.attached? %>
+                  <%= image_tag user.avatar, class: 'rounded-circle' %>
+                <% else %>
+                  <%= image_tag("http://icons.iconarchive.com/icons/sbstnblnd/plateau/256/Apps-aqualung-icon.png", class: 'rounded-circle') %>
+                <% end %>
+              </div>
+              <div class="info-post">
+                <div class="name-time">
+                  <span class="name"><%= link_to "#{user.name}", user_path(user) %></span>
+                  <span><small><%= post.created_at %></small></span>
+                </div>
+                <div class="title">
+                  <strong>
+                    <%= post.title %>
+                  </strong>
+                </div>
+                <hr>
+                <div class="content">
+                  <span>
+                    <%= post.content[0..200] %>
+                  </span>
+                  <span class="show-more"><strong><a href="#">Show more</a></strong></span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 offset-md-4 paginate-box">
+      <%= paginate(@posts) %>
+    </div>
+  </div>
+</div>

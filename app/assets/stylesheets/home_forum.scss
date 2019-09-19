@@ -1,0 +1,41 @@
+.box-post {
+  margin-top: 10px;
+  border: 1px solid black;
+  padding: 5px;
+}
+.image-user {
+  float: left;
+  display: block;
+  margin-right: 20px;
+}
+.image-user img {
+  height: 60px;
+}
+.info-post {
+  display: block;
+  outline: none;
+}
+.name {
+  color: blue;
+  a {
+    text-decoration: underline;
+  }
+}
+.content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.show-more {
+  float: right;
+  text-decoration: underline;
+}
+.paginate-box {
+  margin-top: 20px;
+  text-align: center;
+  .paginate {
+    text-align: center;
+    li {
+      margin-left: 5px;
+    }
+  }
+}

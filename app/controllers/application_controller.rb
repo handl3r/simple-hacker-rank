@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  protect_from_forgery prepend: true, with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # Note bug: when use admin to edit or make something will redirect to login_url
   before_action :require_login, only: %i[show edit update destroy]
 
   private

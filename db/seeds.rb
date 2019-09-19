@@ -4,7 +4,7 @@ require 'faker'
 
 # Make normal user
 (0..50).each do |i|
-  User.create(name: "test#{i}", email: "test#{i}@email.com",
+  User.create(name: Faker::Name.unique.name, email: "test#{i}@email.com",
               password: '111111',
               password_confirmation: '111111')
 end
@@ -66,6 +66,25 @@ Challenge.all.each do |challenge|
                      code: default_code_go)
 end
 
-
 # Make user admin
 AdminUser.create!(email: 'admin@email.com', password: '111111', password_confirmation: '111111') if Rails.env.development?
+
+# Make category_posts
+CategoryPost.create(name: 'Challenges')
+CategoryPost.create(name: 'Bug')
+CategoryPost.create(name: 'Feature Requests')
+
+# Make posts
+users = User.all
+users_have_posts = users[1..40]
+users_have_posts.each do |user|
+  number_posts = rand(1..5)
+  number_posts.times do
+    Post.create(title: Faker::Lorem.sentence, category_post: CategoryPost.all.sample, user: user, content: Faker::Lorem.paragraph_by_chars)
+  end
+end
+
+# Make posts
+Post.all.each do |post|
+  Comment.create(user: User.all.sample, post: Post.all.sample, content: Faker::Lorem.sentence)
+end

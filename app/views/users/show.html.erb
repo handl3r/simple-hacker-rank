@@ -5,6 +5,8 @@
         <div class="profile-img">
            <% if @user.avatar.attached? %>
             <%= image_tag @user.avatar, class: "" %>
+            <% else %>
+            <%= image_tag("http://icons.iconarchive.com/icons/sbstnblnd/plateau/256/Apps-aqualung-icon.png") %>
           <% end %>
         </div>
       </div>

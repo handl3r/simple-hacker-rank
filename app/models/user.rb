@@ -16,4 +16,6 @@ class User < ApplicationRecord
   has_many :passlevels
   has_many :challenges, :through => :passlevels
   has_many :successcodes
+  has_many :posts
+  has_many :comments
 end

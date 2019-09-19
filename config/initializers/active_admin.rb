@@ -6,6 +6,7 @@ ActiveAdmin.setup do |config|
   #
   config.site_title = "My App"
 
+
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
@@ -312,4 +313,6 @@ ActiveAdmin.setup do |config|
   # You can inherit it with own class and inject it for all resources
   #
   # config.order_clause = MyOrderClause
+  #
+  config.comments_registration_name = 'AdminComment'
 end
